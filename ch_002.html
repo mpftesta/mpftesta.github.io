@@ -73,7 +73,7 @@ found in the LICENSE file.
       var poseMat = mat4.create();
       var viewMat = mat4.create();
       var vrPresentButton = null;
-      var nextButton = null;
+
       // ================================================================
       // WebGL and WebAudio scene setup. This code is not WebVR specific.
       // ================================================================
@@ -95,7 +95,7 @@ found in the LICENSE file.
         gl.enable(gl.CULL_FACE);
 
         panorama = new VRPanorama(gl);
-        panorama.setImage("media/textures/ch_001.jpg");
+        panorama.setImage("media/textures/ch_002.jpg");
 
         //For FPS Stats
         //stats = new WGLUStats(gl);
@@ -109,10 +109,6 @@ found in the LICENSE file.
       // ================================
       // WebVR-specific code begins here.
       // ================================
-
-      function onNext () {
-        window.location.href = "http://mpftesta.github.io/ch_002.html";
-      }
 
       function onVRRequestPresent () {
         vrDisplay.requestPresent([{ source: webglCanvas }]).then(function () {
@@ -150,8 +146,6 @@ found in the LICENSE file.
             vrDisplay = displays[0];
 
             init(true);
-
-            VRSamplesUtil.addButton("Next", "X", null, onNext);
 
             if (!vrDisplay.stageParameters) {
               VRSamplesUtil.addButton("Reset Pose", "R", null, function () { vrDisplay.resetPose(); });
