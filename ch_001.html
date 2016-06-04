@@ -160,8 +160,8 @@ found in the LICENSE file.
 
             init(true);
 
-            VRSamplesUtil.addButton("Next", "X", null, onNext);
             VRSamplesUtil.addButton("Back", "Z", null, onBack);
+            VRSamplesUtil.addButton("Next", "X", null, onNext);
             VRSamplesUtil.addButton("Home", "H", null, onHome);
             if (!vrDisplay.stageParameters) {
               VRSamplesUtil.addButton("Reset Pose", "R", null, function () { vrDisplay.resetPose(); });
