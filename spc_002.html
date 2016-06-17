@@ -111,25 +111,7 @@ found in the LICENSE file.
       // ================================
 
       function onNext () {
-        var glAttribs = {
-          alpha: false,
-          antialias: false,
-          preserveDrawingBuffer: preserveDrawingBuffer
-        };
-        gl = webglCanvas.getContext("webgl", glAttribs);
-        gl.enable(gl.DEPTH_TEST);
-        gl.enable(gl.CULL_FACE);
-
-        panorama = new VRPanorama(gl);
-        panorama.setImage("media/textures/spc/spc_002.JPG");
-
-        //For FPS Stats
-        //stats = new WGLUStats(gl);
-
-        // Wait until we have a WebGL context to resize and start rendering.
-        window.addEventListener("resize", onResize, false);
-        onResize();
-        window.requestAnimationFrame(onAnimationFrame);
+        window.location.href = "http://mpftesta.github.io/ch_002.html";
       }
 
       function onBack () {
