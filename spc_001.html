@@ -110,7 +110,7 @@ found in the LICENSE file.
       // WebVR-specific code begins here.
       // ================================
 
-      function onNext () {
+      function toggleTo(preserveDrawingBuffer, nextThing){
         var glAttribs = {
           alpha: false,
           antialias: false,
@@ -121,7 +121,7 @@ found in the LICENSE file.
         gl.enable(gl.CULL_FACE);
 
         panorama = new VRPanorama(gl);
-        panorama.setImage("media/textures/spc/spc_002.JPG");
+        panorama.setImage(nextThing);
 
         //For FPS Stats
         //stats = new WGLUStats(gl);
@@ -130,6 +130,11 @@ found in the LICENSE file.
         window.addEventListener("resize", onResize, false);
         onResize();
         window.requestAnimationFrame(onAnimationFrame);
+
+      }
+
+      function onNext () {
+        toggleTo(true, "media/textures/spc/spc_002.JPG");
       }
 
       function onBack () {
