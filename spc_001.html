@@ -112,9 +112,11 @@ found in the LICENSE file.
 
         if (startPos == null || startPos == ""){
           panorama.setImage("media/textures/spc/spc_001.JPG");
+          arrayPos = 1;
         }
         else {
           panorama.setImage("media/textures/spc/spc_"+startPos+".JPG");
+          arrayPos = parseInt(startPos);
         }
 
         //For FPS Stats
