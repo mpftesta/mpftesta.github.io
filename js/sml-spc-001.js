@@ -1,71 +1,4 @@
-<!doctype html>
-<!--
-Copyright 2016 The Chromium Authors. All rights reserved.
-Use of this source code is governed by a BSD-style license that can be
-found in the LICENSE file.
--->
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-    <title>Sample Listing - Foyer</title>
-
-    <!--
-      This sample demonstrates how to render a 360 degree panoramic image in VR.
-    -->
-
-    <style>
-      #webgl-canvas {
-        box-sizing: border-box;
-        height: 100%;
-        left: 0;
-        margin: 0;
-        position: absolute;
-        top: 0;
-        width: 100%;
-      }
-    </style>
-
-    <!-- This entire block in only to facilitate dynamically enabling and
-    disabling the WebVR polyfill, and is not necessary for most WebVR apps.
-    If you want to use the polyfill in your app, just include the js file and
-    everything will work the way you want it to by default.
-    <script>
-      var WebVRConfig = {
-        // Prevents the polyfill from initializing automatically.
-        DEFER_INITIALIZATION: true,
-        // Polyfill optimizations
-        DIRTY_SUBMIT_FRAME_BINDINGS: true,
-        BUFFER_SCALE: 0.75,
-      };
-    </script>-->
-
-    <script src="js/third-party/webvr-polyfill.js"></script>
-    <script src="js/third-party/wglu/wglu-url.js"></script>
-
-    <!--
-    <script>
-      // Dynamically turn the polyfill on if requested by the query args.
-      if (WGLUUrl.getBool('polyfill', false)) { InitializeWebVRPolyfill(); }
-    </script>-->
-    <!-- End sample polyfill enabling logic -->
-
-    <script src="js/third-party/gl-matrix-min.js"></script>
-
-    <script src="js/third-party/wglu/wglu-program.js"></script>
-    <script src="js/third-party/wglu/wglu-stats.js"></script>
-
-    <script src="js/vr-panorama.js"></script>
-    <script src="js/vr-samples-util.js"></script>
-  </head>
-  <body>
-    <canvas id="webgl-canvas"></canvas>
-    <script>
-      /* global mat4, vec3, VRPanorama, WGLUStats, VRSamplesUtil */
-      (function () {
+(function () {
       "use strict";
 
       var vrDisplay = null;
@@ -82,7 +15,19 @@ found in the LICENSE file.
       var webglCanvas = document.getElementById("webgl-canvas");
       var gl = null;
       var panorama = null;
+      var arrayPos = 1;
+      var arrayMax = 16;
       //var stats = null;
+
+      function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          name = name.replace(/[\[\]]/g, "\\$&");
+          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+              results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
 
       function init (preserveDrawingBuffer) {
         var glAttribs = {
@@ -94,8 +39,18 @@ found in the LICENSE file.
         gl.enable(gl.DEPTH_TEST);
         gl.enable(gl.CULL_FACE);
 
+        var startPos = getParameterByName('start');
+
         panorama = new VRPanorama(gl);
-        panorama.setImage("media/textures/spc/spc_001.JPG");
+
+        if (startPos == null || startPos == ""){
+          panorama.setImage("media/textures/spc/spc_001.JPG");
+          arrayPos = 1;
+        }
+        else {
+          panorama.setImage("media/textures/spc/spc_"+startPos+".JPG");
+          arrayPos = parseInt(startPos);
+        }
 
         //For FPS Stats
         //stats = new WGLUStats(gl);
@@ -110,12 +65,43 @@ found in the LICENSE file.
       // WebVR-specific code begins here.
       // ================================
 
+      function toggleTo(preserveDrawingBuffer, nextThing){
+        var glAttribs = {
+          alpha: false,
+          antialias: false,
+          preserveDrawingBuffer: preserveDrawingBuffer
+        };
+        gl = webglCanvas.getContext("webgl", glAttribs);
+        gl.enable(gl.DEPTH_TEST);
+        gl.enable(gl.CULL_FACE);
+
+        panorama = new VRPanorama(gl);
+        panorama.setImage(nextThing);
+
+        //For FPS Stats
+        //stats = new WGLUStats(gl);
+
+        // Wait until we have a WebGL context to resize and start rendering.
+        window.addEventListener("resize", onResize, false);
+        onResize();
+        window.requestAnimationFrame(onAnimationFrame);
+
+      }
+
       function onNext () {
-        window.location.href = "http://mpftesta.github.io/ch_002.html";
+        arrayPos = arrayPos + 1;
+        if (arrayPos > arrayMax) {
+          arrayPos = 1;
+        }
+        toggleTo(true, "media/textures/spc/spc_00"+arrayPos.toString()+".JPG");
       }
 
       function onBack () {
-        window.location.href = "http://mpftesta.github.io/ch_004.html";
+        arrayPos = arrayPos - 1;
+        if (arrayPos < 1) {
+          arrayPos = 16;
+        }
+        toggleTo(true, "media/textures/spc/spc_00"+arrayPos.toString()+".JPG");
       }
 
       function onHome () {
@@ -261,6 +247,3 @@ found in the LICENSE file.
         //stats.end();
       }
       })();
-    </script>
-  </body>
-</html>
