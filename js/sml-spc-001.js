@@ -93,7 +93,7 @@
         if (arrayPos > arrayMax) {
           arrayPos = 1;
         }
-        posString = ("00"+arrayPos.toString()).slice(-3);
+        posString = String(("00"+arrayPos.toString()).slice(-3));
         toggleTo(true, "media/textures/spc/spc_"+posString+".JPG");
       }
 
@@ -102,7 +102,7 @@
         if (arrayPos < 1) {
           arrayPos = 16;
         }
-        posString = ("00"+arrayPos.toString()).slice(-3);
+        posString = String(("00"+arrayPos.toString()).slice(-3));
         toggleTo(true, "media/textures/spc/spc_"+posString+".JPG");
       }
 
