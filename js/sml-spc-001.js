@@ -17,6 +17,7 @@
       var panorama = null;
       var arrayPos = 1;
       var arrayMax = 16;
+      var posString = "";
       //var stats = null;
 
       function getParameterByName(name, url) {
