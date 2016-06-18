@@ -93,7 +93,8 @@
         if (arrayPos > arrayMax) {
           arrayPos = 1;
         }
-        toggleTo(true, "media/textures/spc/spc_00"+arrayPos.toString()+".JPG");
+        posString = ("00"+arrayPos.toString()).slice(-3);
+        toggleTo(true, "media/textures/spc/spc_"+posString+".JPG");
       }
 
       function onBack () {
@@ -101,7 +102,8 @@
         if (arrayPos < 1) {
           arrayPos = 16;
         }
-        toggleTo(true, "media/textures/spc/spc_00"+arrayPos.toString()+".JPG");
+        posString = ("00"+arrayPos.toString()).slice(-3);
+        toggleTo(true, "media/textures/spc/spc_"+posString+".JPG");
       }
 
       function onHome () {
