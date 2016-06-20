@@ -101,7 +101,7 @@
       function onBack () {
         arrayPos = arrayPos - 1;
         if (arrayPos < 1) {
-          arrayPos = 16;
+          arrayPos = arrayMax;
         }
         posString = String(("00"+arrayPos.toString()).slice(-3));
         toggleTo(true, "media/textures/1290_mtn_hwy/1290_mtn_hwy_"+posString+".JPG");
