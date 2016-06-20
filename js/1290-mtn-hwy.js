@@ -16,7 +16,7 @@
       var gl = null;
       var panorama = null;
       var arrayPos = 1;
-      var arrayMax = 16;
+      var arrayMax = 20;
       var posString = "";
       //var stats = null;
 
