@@ -15,3 +15,18 @@ body {
 footer {
     margin: 50px 0;
 }
+
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 0px;
+  width: auto;
+}
+
+.navbar {
+	width: 70%;
+	margin-right: auto;
+	margin-left: auto;
+}
