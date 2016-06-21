@@ -108,7 +108,7 @@
       }
 
       function onHome () {
-        window.location.href = "http://mpftesta.github.io";
+        window.location.href = "http://mpftesta.github.io/1290_mtn_hwy_gallery.html";
       }
 
 
